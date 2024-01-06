@@ -1,0 +1,4 @@
+
+*.pyc
+tmux_config.json
+bot_config.json

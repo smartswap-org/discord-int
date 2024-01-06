@@ -23,7 +23,7 @@ async def help(client, message, args): # Command !help that print all commands
     cmdslist = ""
     for i in commands:
         cmdslist += bot_config["prefix"] + i + "\n"
-    await send_embed(message.channel, "📜 Commands list", cmdslist, discord.Color.green()) 
+    await send_embed(message.channel, "📜 Commands list", cmdslist, discord.Color.pink()) 
 
 commands["help"] = help
 
