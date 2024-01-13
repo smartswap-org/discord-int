@@ -12,9 +12,9 @@ async def logschannelid(client, message, args):
     bot_config['logschannelid'] = args[0] # Add the channel ID to config dic
     with open('bot_config.json', 'w') as f:
         json.dump(bot_config, f, indent=4) # Write the new config with id added in json file
-    return await send_embed(
+    await send_embed(
         message.channel,
         "📜Logs Channel ID",
         "Value has been edited: " + str(bot_config["logschannelid"]) ,
         discord.Color.green())
-        
+    return await discord_log(client, "📜Logs Channel ID", "Channel ID for logs edited by: " + message.author, discord.Color.green()) 

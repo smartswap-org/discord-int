@@ -1,8 +1,8 @@
 from .embeds import *
-from .json import *
 from .config import *
 
-async def log(client, title, log, color=discord.Color.dark_blue()):
+
+async def discord_log(client, title, log, color=discord.Color.dark_blue()):
     bot_config = get_bot_config()
     guild = client.get_guild(int(bot_config["discordid"]))
     if not "logschannelid" in bot_config.keys(): return 

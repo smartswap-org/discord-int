@@ -1,4 +1,4 @@
-from .json import *
+from DEXcryptoLib.Lib import *
 
 def get_bot_config():
     """

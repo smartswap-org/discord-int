@@ -5,7 +5,6 @@ from .commands.restart import *
 from .commands.tmux import *
 from .commands.ping import *
 
-from .misc.json import *
 from .misc.embeds import *
 from .misc.logs import *
-from .misc.config import *
+from .misc.database import *

@@ -1,7 +1,6 @@
 import discord
 from discord import Activity, ActivityType
 from discord.ext import commands, tasks
-
 from project import * # Project includes
 
 bot_config = get_bot_config()
@@ -32,7 +31,7 @@ class MyClient(discord.Client): # Create the client object for the bot
         print(f'Logged in as {self.user} (ID: {self.user.id})')
         await self.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="➡️ " + bot_config["prefix"] +"help")) # Rich presence
         self.tmux_task.start() # // While
-        await log(client, "Bot", "🤖 Bot started")   
+        await discord_log(client, "Bot", "🤖 Bot started")   
 
     @tasks.loop(seconds=5)
     async def tmux_task(self): # Execute tmux checkup every 5 seconds
@@ -57,6 +56,9 @@ class MyClient(discord.Client): # Create the client object for the bot
             #else:
                 #return await error(message.channel, "You can only use the bot in the smartswap room.")
                
+db_smartswap = init_database("smartswap", "db_config")
+db_smartswap.connect()
+db_setup_smartswap(db_smartswap)
 client = MyClient(intents=discord.Intents.all()) # Declare the client object
 client.run(bot_config["token"]) # Log the client (bot)
 

@@ -1,4 +1,5 @@
-
+Logs/
 *.pyc
 tmux_config.json
 bot_config.json
+db_config.json
