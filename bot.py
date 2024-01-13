@@ -16,7 +16,8 @@ admin_commands = { # All bot commands
     'tmux': tmux,
     'logschannelid': logschannelid,
     'ping': ping,
-    'clients': clients
+    'clients': clients,
+    'update': update
 }
 
 async def help(client, message, args): # Command !help that print all commands
