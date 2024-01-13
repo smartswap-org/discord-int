@@ -1,7 +1,7 @@
 import discord
 import platform
 import psutil
-from ..misc.logs import *
+from ...misc.logs import *
 
 async def host(client, message, args):
     try:
@@ -36,4 +36,4 @@ async def host(client, message, args):
         )
 
     except Exception as e:
-        await error(message.channel, f"Error retrieving host information. {e}")
+        await error(message.channel, f"Error retrieving host information.\n {e}")

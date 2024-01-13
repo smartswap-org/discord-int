@@ -1,5 +1,5 @@
 import discord
-from ..misc.logs import *
+from ...misc.logs import *
 
 async def clear(client, message, args):
     try:
@@ -12,4 +12,4 @@ async def clear(client, message, args):
         )
     except Exception as e:
         print(f"Error during message deletion: {e}")
-        await error(message.channel, "Error during message deletion.")
+        await error(message.channel, f"Error during message deletion.\n {e}")

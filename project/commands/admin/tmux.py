@@ -1,6 +1,6 @@
 import discord
-from ..misc.logs import *
-from ..misc.config import *
+from ...misc.logs import *
+from ...misc.config import *
 from DEXcryptoLib.Lib.Misc.json import *
 import subprocess
 
@@ -32,7 +32,7 @@ async def tmux(client, message, args):
                         discord.Color.green()
                     )
                 except Exception as e:
-                    await error(message.channel, f"Error during command ['tmux', 'list-sessions']. {e}")
+                    await error(message.channel, f"Error during command ['tmux', 'list-sessions'].\n {e}")
             case "config":
                 embed_desc = "**Name | Config**\n\n"
                 match tmux_config:

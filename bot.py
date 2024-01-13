@@ -1,17 +1,22 @@
 import discord
 from discord import Activity, ActivityType
-from discord.ext import commands, tasks
+from discord.ext import tasks
 from project import * # Project includes
 
 bot_config = get_bot_config()
 
-commands = { # All bot commands
+client_commands = {
+
+}
+
+admin_commands = { # All bot commands
     'clear': clear,
     'host': host,
     'restart': restart,
     'tmux': tmux,
     'logschannelid': logschannelid,
     'ping': ping,
+    'clients': clients
 }
 
 async def help(client, message, args): # Command !help that print all commands
@@ -19,16 +24,22 @@ async def help(client, message, args): # Command !help that print all commands
     Function to send a message in embed 
     with the list of bot commands by printing them 1 per line.
     """
-    cmdslist = ""
-    for i in commands:
+    cmdslist = "- **client_commands**:\n"
+    for i in client_commands:
         cmdslist += bot_config["prefix"] + i + "\n"
+    if message.author.guild_permissions.administrator:
+        cmdslist += "\n- **admin_commands**:\n"
+        for i in admin_commands:
+            cmdslist += bot_config["prefix"] + i + "\n"
     await send_embed(message.channel, "📜 Commands list", cmdslist, discord.Color.pink()) 
 
-commands["help"] = help
+client_commands["help"] = help
 
 class MyClient(discord.Client): # Create the client object for the bot
     async def on_ready(self): # When the bot start
         print(f'Logged in as {self.user} (ID: {self.user.id})')
+        self.db_smartswap = init_database("smartswap", "db_config.json")
+        self.db_smartswap.connect()
         await self.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="➡️ " + bot_config["prefix"] +"help")) # Rich presence
         self.tmux_task.start() # // While
         await discord_log(client, "Bot", "🤖 Bot started")   
@@ -46,17 +57,15 @@ class MyClient(discord.Client): # Create the client object for the bot
         if message.content[:len(bot_config["prefix"])] != bot_config["prefix"]: return # Not good prefix command
         command = content[0] 
         args = content[1:]
-        if command in commands: # Verify that the command sent is in commands list
-            print("Command: " + bot_config["prefix"] + command + " | Author: " + str(message.author) + "(" + str(message.author.id) + ") | Channel: " + str(message.channel.name))
-            if message.channel.name == "smartswap" or str(message.channel.id) == bot_config["logschannelid"]: 
-                if message.author.guild_permissions.administrator: # Admin permission security to use the bot
-                    await commands[command](self, message, args) 
-                else:
-                    return await error(message.channel, "You dont have the permission to use the bot.") 
-            #else:
-                #return await error(message.channel, "You can only use the bot in the smartswap room.")
-               
-db_smartswap = init_database("smartswap", "db_config.json")
-db_smartswap.connect()
+        if command in admin_commands: # Verify that the command sent is in commands list
+            if message.author.guild_permissions.administrator: # Admin permission security to use the bot
+                if message.channel.name == "smartswap": # To use the bot in log channel: str(message.channel.id) == bot_config["logschannelid"] 
+                    print("admin-Command: " + bot_config["prefix"] + command + " | Author: " + str(message.author) + "(" + str(message.author.id) + ") | Channel: " + str(message.channel.name))
+                    await admin_commands[command](self, message, args) 
+            else:
+                    return await error(message.channel, "You dont have the permission to use this command (Admin permission).") 
+        elif command in client_commands:
+            await client_commands[command](self, message, args) 
+
 client = MyClient(intents=discord.Intents.all()) # Declare the client object
 client.run(bot_config["token"]) # Log the client (bot)

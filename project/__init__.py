@@ -1,9 +1,10 @@
-from .commands.clear import *
-from .commands.host import *
-from .commands.logschannelid import *
-from .commands.restart import *
-from .commands.tmux import *
-from .commands.ping import *
+from .commands.admin.clear import *
+from .commands.admin.host import *
+from .commands.admin.logschannelid import *
+from .commands.admin.restart import *
+from .commands.admin.tmux import *
+from .commands.admin.ping import *
+from .commands.admin.clients import *
 
 from .misc.embeds import *
 from .misc.logs import *

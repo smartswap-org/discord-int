@@ -11,4 +11,4 @@ async def discord_log(client, title, log, color=discord.Color.dark_blue()):
 
 async def error(message, error):
     if not message: return 
-    await send_embed(message, "❌ Error", error, discord.Color.red())
+    await send_embed(message, "❌ Error", error, discord.Color.brand_red())
