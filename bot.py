@@ -56,9 +56,7 @@ class MyClient(discord.Client): # Create the client object for the bot
             #else:
                 #return await error(message.channel, "You can only use the bot in the smartswap room.")
                
-db_smartswap = init_database("smartswap", "db_config")
+db_smartswap = init_database("smartswap", "db_config.json")
 db_smartswap.connect()
-db_setup_smartswap(db_smartswap)
 client = MyClient(intents=discord.Intents.all()) # Declare the client object
 client.run(bot_config["token"]) # Log the client (bot)
-

@@ -7,4 +7,3 @@ from .commands.ping import *
 
 from .misc.embeds import *
 from .misc.logs import *
-from .misc.database import *
