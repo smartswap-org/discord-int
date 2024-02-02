@@ -10,3 +10,5 @@ from .commands.admin.update import *
 
 from .misc.embeds import *
 from .misc.logs import *
+
+from .wallets_rooms.check import *
