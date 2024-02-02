@@ -29,12 +29,3 @@ async def check_wallets_rooms(client, category_id):
     except Exception as e:
         await discord_log(client, "Error", f"Error during wallet and room checking: {e}")
 
-async def check_channel_access(client, channel, member):
-    try:
-        access = channel.permissions_for(member).read_messages and channel.permissions_for(member).send_messages
-        if not access:
-            await discord_log(client, "Channel Access Error", f"User {member.display_name} does not have access to channel {channel.name}")
-        return access
-    except Exception as e:
-        discord_log(client, "Error", f"Error checking channel access: {e}")
-        return False

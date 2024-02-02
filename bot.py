@@ -43,7 +43,7 @@ class MyClient(discord.Client): # Create the client object for the bot
         self.db_smartswap = init_database("smartswap", "db_config.json")
         self.db_smartswap.connect()
         await self.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="➡️ " + bot_config["prefix"] +"help")) # Rich presence
-        #self.tmux_task.start() # // While
+        self.tmux_task.start() # // While
         self.check_wallets_rooms_task.start() # // While
         await discord_log(client, "Bot", "🤖 Bot started")   
        
@@ -74,6 +74,7 @@ class MyClient(discord.Client): # Create the client object for the bot
                     return await error(message.channel, "You dont have the permission to use this command (Admin permission).") 
         elif command in client_commands:
             await client_commands[command](self, message, args) 
+
 
 client = MyClient(intents=discord.Intents.all()) # Declare the client object
 client.run(bot_config["token"]) # Log the client (bot)
