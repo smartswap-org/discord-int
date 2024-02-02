@@ -120,13 +120,9 @@ async def access(client, message, args, usage):
         if not existing_address:
             return await error(message.channel, f"Wallet with address '{address}' does not exist. Please make sure the address is correct.")
 
-        print("a")
-        print((f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND client_address = '{address}'"))
         existing_access = client.db_smartswap.execute_query(f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND wallet_address = '{address}'")
-        print("c")
         if existing_access:
             return await error(message.channel, f"Access for user: '{user}' on wallet '{address}' already exists.")
-        print("b")
 
         client.db_smartswap.insert_into_table('client_wallets', {'client_user': user, 'wallet_address': address})
         await send_embed(
