@@ -6,6 +6,7 @@ async def clients(client, message, args):
     clients create <user> <discord_user_id>
     clients delete <user/discord_user_id>
     clients search <user/discord_user_id>
+    clients access <user> <address>
     """
     
     if not args or len(args) < 2:
@@ -22,6 +23,9 @@ async def clients(client, message, args):
 
         case "delete":
             await delete_user(client, message, args, usage)
+
+        case "access":
+            await access(client, message, args, usage)
 
         case _:
             await error(message.channel, usage)
@@ -100,3 +104,37 @@ async def delete_user(client, message, args, usage):
 
     except Exception as e:
         await error(message.channel, f"Error while searching into the database. \n{e}")
+
+async def access(client, message, args, usage):
+    try:
+        if len(args) != 3:
+            return await error(message.channel, usage)
+
+        user, address = args[1], args[2]
+
+        existing_user = client.db_smartswap.execute_query(f"SELECT * FROM clients WHERE user = '{user}'")
+        if not existing_user:
+            return await error(message.channel, f"User with username '{user}' does not exist. Please create the user first.")
+
+        existing_address = client.db_smartswap.execute_query(f"SELECT * FROM wallets WHERE address = '{address}'")
+        if not existing_address:
+            return await error(message.channel, f"Wallet with address '{address}' does not exist. Please make sure the address is correct.")
+
+        print("a")
+        print((f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND client_address = '{address}'"))
+        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND wallet_address = '{address}'")
+        print("c")
+        if existing_access:
+            return await error(message.channel, f"Access for user: '{user}' on wallet '{address}' already exists.")
+        print("b")
+
+        client.db_smartswap.insert_into_table('client_wallets', {'client_user': user, 'wallet_address': address})
+        await send_embed(
+            message.channel,
+            "✅ Success",
+            f"Access for user '{user}' on wallet '{address}' has been added to the database.",
+            discord.Color.green()
+        )
+
+    except Exception as e:
+        await error(message.channel, f"Error while inserting into the database. \n{e}")
