@@ -17,6 +17,7 @@ admin_commands = { # All bot commands
     'logschannelid': logschannelid,
     'ping': ping,
     'clients': clients,
+    'wallets': wallets,
     'update': update
 }
 

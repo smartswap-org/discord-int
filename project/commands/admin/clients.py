@@ -6,7 +6,8 @@ async def clients(client, message, args):
     clients create <user> <discord_user_id>
     clients delete <user/discord_user_id>
     clients search <user/discord_user_id>
-    clients access <user> <address>
+    clients access_set <user> <address>
+    clients access_revoke <user> <address>
     """
     
     if not args or len(args) < 2:
@@ -24,8 +25,11 @@ async def clients(client, message, args):
         case "delete":
             await delete_user(client, message, args, usage)
 
-        case "access":
-            await access(client, message, args, usage)
+        case "access_set":
+            await access_set(client, message, args, usage)
+
+        case "access_revoke":
+            await access_revoke(client, message, args, usage)
 
         case _:
             await error(message.channel, usage)
@@ -105,7 +109,7 @@ async def delete_user(client, message, args, usage):
     except Exception as e:
         await error(message.channel, f"Error while searching into the database. \n{e}")
 
-async def access(client, message, args, usage):
+async def access_set(client, message, args, usage):
     try:
         if len(args) != 3:
             return await error(message.channel, usage)
@@ -134,3 +138,25 @@ async def access(client, message, args, usage):
 
     except Exception as e:
         await error(message.channel, f"Error while inserting into the database. \n{e}")
+
+async def access_revoke(client, message, args, usage):
+    try:
+        if len(args) != 3:
+            return await error(message.channel, usage)
+
+        user, address = args[1], args[2]
+
+        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND wallet_address = '{address}'")
+        if not existing_access:
+            return await error(message.channel, f"Access for user: '{user}' on wallet '{address}' does not exist.")
+
+        client.db_smartswap.delete_row_by_column_values('client_wallets', {'client_user': user, 'wallet_address': address})
+        await send_embed(
+            message.channel,
+            "✅ Success",
+            f"Access for user '{user}' on wallet '{address}' has been revoked and removed from the database.",
+            discord.Color.green()
+        )
+
+    except Exception as e:
+        await error(message.channel, f"Error while revoking access from the database. \n{e}")
