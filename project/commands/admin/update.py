@@ -17,30 +17,23 @@ async def update(client, message, args):
             # Git pull the main project
             pull_result = subprocess.run(['git', '-C', project_path, 'pull'], capture_output=True, text=True)
 
-            # Check if the git pull was successful
-            if pull_result.returncode == 0:
-                await send_embed(
-                    message.channel,
-                    "🖥️ git pull",
-                    pull_result,
-                    discord.Color.pink()
+            await send_embed(
+                message.channel,
+                "🖥️ git pull",
+                pull_result,
+                discord.Color.pink()
+            )
+
+            # Git submodule update --remote
+            submodule_result = subprocess.run(['git', '-C', project_path, 'submodule', 'update', '--remote'], capture_output=True, text=True)
+
+            await send_embed(
+                message.channel,
+                "🖥️ git submodule update",
+                submodule_result,
+                discord.Color.pink()
                 )
 
-                # Git submodule update --remote
-                submodule_result = subprocess.run(['git', '-C', project_path, 'submodule', 'update', '--remote'], capture_output=True, text=True)
-
-                if submodule_result.returncode == 0:
-                    await send_embed(
-                        message.channel,
-                        "🖥️ git submodule update",
-                        submodule_result,
-                        discord.Color.pink()
-                    )
-                else:
-                    await error(message.channel, f"Error during submodule update: {submodule_result.stderr}")
-
-            else:
-                await error(message.channel, f"Error during command ['git', '-C', {project_path}, 'pull']\n {pull_result.stderr}")
 
         except Exception as e:
             await error(message.channel, f"An unexpected error occurred: {e}")
