@@ -43,7 +43,7 @@ class MyClient(discord.Client): # Create the client object for the bot
         self.db_smartswap = init_database("smartswap", "db_config.json")
         self.db_smartswap.connect()
         await self.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="➡️ " + bot_config["prefix"] +"help")) # Rich presence
-        self.tmux_task.start() # // While
+        #self.tmux_task.start() # // While
         self.check_wallets_rooms_task.start() # // While
         await discord_log(client, "Bot", "🤖 Bot started")   
        
@@ -53,8 +53,8 @@ class MyClient(discord.Client): # Create the client object for the bot
         await tmux(self, None, ['checkup'])
 
     @tasks.loop(seconds=5)
-    async def check_wallets_rooms_task(self): # Execute tmux checkup every 5 seconds
-        await check_wallets_rooms(self, 1189954246653792397)
+    async def check_wallets_rooms_task(self): # Execute wallets rooms checkup every 5 seconds
+        await check_wallets_rooms(self, int(bot_config["roomscategid"]))
 
     async def on_message(self, message): # When a message is sent
         if message.author.id == self.user.id: return  # No respond to itself

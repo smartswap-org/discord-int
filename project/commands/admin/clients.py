@@ -6,8 +6,8 @@ async def clients(client, message, args):
     clients create <user> <discord_user_id>
     clients delete <user/discord_user_id>
     clients search <user/discord_user_id>
-    clients access_set <user> <address>
-    clients access_revoke <user> <address>
+    clients access_set <clients_user> <wallet_name>
+    clients access_revoke <clients_user> <wallet_name>
     """
     
     if not args or len(args) < 2:
@@ -39,7 +39,7 @@ async def create_user(client, message, args, usage):
         if len(args) != 3:
             return await error(message.channel, usage)
 
-        user, discord_user_id = args[1], args[2]
+        user, discord_user_id = args[1].lower(), args[2]
 
         existing_user = client.db_smartswap.execute_query(f"SELECT * FROM clients WHERE user = '{user}'")
         if existing_user:
@@ -114,25 +114,25 @@ async def access_set(client, message, args, usage):
         if len(args) != 3:
             return await error(message.channel, usage)
 
-        user, address = args[1], args[2]
+        user, name = args[1].lower(), args[2].lower()
 
         existing_user = client.db_smartswap.execute_query(f"SELECT * FROM clients WHERE user = '{user}'")
         if not existing_user:
             return await error(message.channel, f"User with username '{user}' does not exist. Please create the user first.")
 
-        existing_address = client.db_smartswap.execute_query(f"SELECT * FROM wallets WHERE address = '{address}'")
-        if not existing_address:
-            return await error(message.channel, f"Wallet with address '{address}' does not exist. Please make sure the address is correct.")
+        existing_name = client.db_smartswap.execute_query(f"SELECT * FROM wallets WHERE name = '{name}'")
+        if not existing_name:
+            return await error(message.channel, f"Wallet with name '{name}' does not exist. Please make sure the name is correct.")
 
-        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND wallet_address = '{address}'")
+        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM wallets_access WHERE client_user = '{user}' AND wallet_name = '{name}'")
         if existing_access:
-            return await error(message.channel, f"Access for user: '{user}' on wallet '{address}' already exists.")
+            return await error(message.channel, f"Access for user: '{user}' on wallet '{name}' already exists.")
 
-        client.db_smartswap.insert_into_table('client_wallets', {'client_user': user, 'wallet_address': address})
+        client.db_smartswap.insert_into_table('wallets_access', {'client_user': user, 'wallet_name': name})
         await send_embed(
             message.channel,
             "✅ Success",
-            f"Access for user '{user}' on wallet '{address}' has been added to the database.",
+            f"Access for user '{user}' on wallet '{name}' has been added to the database.",
             discord.Color.green()
         )
 
@@ -144,17 +144,17 @@ async def access_revoke(client, message, args, usage):
         if len(args) != 3:
             return await error(message.channel, usage)
 
-        user, address = args[1], args[2]
+        user, name = args[1].lower(), args[2].lower()
 
-        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND wallet_address = '{address}'")
+        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM wallets_access WHERE client_user = '{user}' AND wallet_name = '{name}'")
         if not existing_access:
-            return await error(message.channel, f"Access for user: '{user}' on wallet '{address}' does not exist.")
+            return await error(message.channel, f"Access for user: '{user}' on wallet '{name}' does not exist.")
 
-        client.db_smartswap.delete_row_by_column_values('client_wallets', {'client_user': user, 'wallet_address': address})
+        client.db_smartswap.delete_row_by_column_values('wallets_access', {'client_user': user, 'wallet_name': name})
         await send_embed(
             message.channel,
             "✅ Success",
-            f"Access for user '{user}' on wallet '{address}' has been revoked and removed from the database.",
+            f"Access for user '{user}' on wallet '{name}' has been revoked and removed from the database.",
             discord.Color.green()
         )
 
