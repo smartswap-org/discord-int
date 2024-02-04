@@ -15,7 +15,7 @@ async def wallets(client, message, args):
                 if len(args) != 5:
                     await error(message.channel, usage)
                 try:
-                    name = args[1]
+                    name = args[1].lower()
                     existing_user = client.db_smartswap.execute_query(f"SELECT * FROM wallets WHERE name = '{name}'")
                     if existing_user:
                         return await error(message.channel, f"Wallet with name '{name}' already exists.")

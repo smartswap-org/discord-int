@@ -8,8 +8,8 @@ async def set_clients_permissions(client, channel):
         SELECT clients.discord_user_id
         FROM clients
         JOIN client_wallets ON client_wallets.client_user = clients.user
-        JOIN wallets ON wallets.address = client_wallets.wallet_address
-        WHERE client_wallets.wallet_address = '{channel.name}';
+        JOIN wallets ON wallets.name = client_wallets.wallet_name
+        WHERE client_wallets.wallet_name = '{channel.name}';
         """
 
     try:
@@ -46,17 +46,17 @@ async def check_wallets_rooms(client, category_id):
             await discord_log(client, "Clients Rooms", f"Category with ID {category_id} not found.")
             return
 
-        wallets = [{'address': wallet[0]} for wallet in client.db_smartswap.execute_query("SELECT * FROM wallets")]
+        wallets = [{'name': wallet[0]} for wallet in client.db_smartswap.execute_query("SELECT * FROM wallets")]
 
         for wallet in wallets:
-            wallet_address = wallet['address'].lower()
-            if not discord.utils.get(category.channels, name=wallet_address):
-                await discord_log(client, "Clients Rooms", f"Creating channel for wallet '{wallet_address}'.")
-                await category.create_text_channel(wallet_address)
+            wallet_name = wallet['name'].lower()
+            if not discord.utils.get(category.channels, name=wallet_name):
+                await discord_log(client, "Clients Rooms", f"Creating channel for wallet '{wallet_name}'.")
+                await category.create_text_channel(wallet_name)
 
         for channel in category.channels:
             await set_clients_permissions(client, channel)
-            if channel.name.lower() not in [wallet['address'].lower() for wallet in wallets]:
+            if channel.name.lower() not in [wallet['name'].lower() for wallet in wallets]:
                 await discord_log(client, "Clients Rooms", f"Deleting channel '{channel.name}' as it does not correspond to any wallet.")
                 await channel.delete()
 

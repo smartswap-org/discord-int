@@ -39,7 +39,7 @@ async def create_user(client, message, args, usage):
         if len(args) != 3:
             return await error(message.channel, usage)
 
-        user, discord_user_id = args[1], args[2]
+        user, discord_user_id = args[1].lower(), args[2]
 
         existing_user = client.db_smartswap.execute_query(f"SELECT * FROM clients WHERE user = '{user}'")
         if existing_user:
@@ -114,7 +114,7 @@ async def access_set(client, message, args, usage):
         if len(args) != 3:
             return await error(message.channel, usage)
 
-        user, name = args[1], args[2]
+        user, name = args[1].lower(), args[2].lower()
 
         existing_user = client.db_smartswap.execute_query(f"SELECT * FROM clients WHERE user = '{user}'")
         if not existing_user:
@@ -144,7 +144,7 @@ async def access_revoke(client, message, args, usage):
         if len(args) != 3:
             return await error(message.channel, usage)
 
-        user, name = args[1], args[2]
+        user, name = args[1].lower(), args[2].lower()
 
         existing_access = client.db_smartswap.execute_query(f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND wallet_name = '{name}'")
         if not existing_access:
