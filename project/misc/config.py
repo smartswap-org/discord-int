@@ -6,7 +6,7 @@ def get_bot_config():
     """
     config = get_json_content("bot_config.json")
     if config == -1: 
-        write_json("bot_config.json", {'token': '0x0', 'prefix': '$', 'discordid': '-1'})
+        write_json("bot_config.json", {'token': '0x0', 'prefix': '$', 'discordid': '-1', 'logschannelid': '-1', 'roomscategid': '-1'})
         print(f"{'bot_config.json'} has been created.")
         return get_json_content("bot_config.json")
     return config 
