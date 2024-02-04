@@ -52,7 +52,8 @@ async def check_wallets_rooms(client, category_id):
             wallet_name = wallet['name'].lower()
             if not discord.utils.get(category.channels, name=wallet_name):
                 await discord_log(client, "Clients Rooms", f"Creating channel for wallet '{wallet_name}'.")
-                await category.create_text_channel(wallet_name)
+                new_wallet_room = await category.create_text_channel(wallet_name)
+                await send_embed(new_wallet_room, "New Channel Created", f"The channel {wallet_name} has just been created.", discord.Color.pink())
 
         for channel in category.channels:
             await set_clients_permissions(client, channel)
