@@ -124,11 +124,11 @@ async def access_set(client, message, args, usage):
         if not existing_name:
             return await error(message.channel, f"Wallet with name '{name}' does not exist. Please make sure the name is correct.")
 
-        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND wallet_name = '{name}'")
+        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM wallets_access WHERE client_user = '{user}' AND wallet_name = '{name}'")
         if existing_access:
             return await error(message.channel, f"Access for user: '{user}' on wallet '{name}' already exists.")
 
-        client.db_smartswap.insert_into_table('client_wallets', {'client_user': user, 'wallet_name': name})
+        client.db_smartswap.insert_into_table('wallets_access', {'client_user': user, 'wallet_name': name})
         await send_embed(
             message.channel,
             "✅ Success",
@@ -146,11 +146,11 @@ async def access_revoke(client, message, args, usage):
 
         user, name = args[1].lower(), args[2].lower()
 
-        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM client_wallets WHERE client_user = '{user}' AND wallet_name = '{name}'")
+        existing_access = client.db_smartswap.execute_query(f"SELECT * FROM wallets_access WHERE client_user = '{user}' AND wallet_name = '{name}'")
         if not existing_access:
             return await error(message.channel, f"Access for user: '{user}' on wallet '{name}' does not exist.")
 
-        client.db_smartswap.delete_row_by_column_values('client_wallets', {'client_user': user, 'wallet_name': name})
+        client.db_smartswap.delete_row_by_column_values('wallets_access', {'client_user': user, 'wallet_name': name})
         await send_embed(
             message.channel,
             "✅ Success",

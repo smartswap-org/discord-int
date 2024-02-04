@@ -57,7 +57,7 @@ async def wallets(client, message, args):
                     wallet_name = args[1]
 
                     # Check if the wallet address exists in the wallets table
-                    query = client.db_smartswap.execute_query(f"DELETE FROM client_wallets WHERE wallet_name = '{wallet_name }';")
+                    query = client.db_smartswap.execute_query(f"DELETE FROM wallets_access WHERE wallet_name = '{wallet_name }';")
                     await send_embed(
                         message.channel, 
                         f"⚙️ Success removed all access to the wallet {wallet_name } for all clients",

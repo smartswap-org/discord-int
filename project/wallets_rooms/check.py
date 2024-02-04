@@ -7,9 +7,9 @@ async def set_clients_permissions(client, channel):
     query = f"""
         SELECT clients.discord_user_id
         FROM clients
-        JOIN client_wallets ON client_wallets.client_user = clients.user
-        JOIN wallets ON wallets.name = client_wallets.wallet_name
-        WHERE client_wallets.wallet_name = '{channel.name}';
+        JOIN wallets_access ON wallets_access.client_user = clients.user
+        JOIN wallets ON wallets.name = wallets_access.wallet_name
+        WHERE wallets_access.wallet_name = '{channel.name}';
         """
 
     try:
