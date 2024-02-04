@@ -3,29 +3,30 @@ from DEXcryptoLib.Lib.Misc.database import *
 
 async def wallets(client, message, args):
     usage = """Invalid argument(s) number. Use:
-    wallets create <address> <private_key> <discord_chanmsglogs_id>
-    wallets delete <address>
-    wallets search <address>
+    wallets create <name> <address> <private_key> <discord_chanmsglogs_id>
+    wallets delete <name>
+    wallets search <name>
     """
     if not args or len(args) < 1:
         await error(message.channel, usage)
     else:
         match args[0]:
             case "create":
-                if len(args) != 4:
+                if len(args) != 5:
                     await error(message.channel, usage)
                 try:
-                    address = args[1]
-                    existing_user = client.db_smartswap.execute_query(f"SELECT * FROM wallets WHERE address = '{address}'")
+                    name = args[1]
+                    existing_user = client.db_smartswap.execute_query(f"SELECT * FROM wallets WHERE name = '{name}'")
                     if existing_user:
-                        return await error(message.channel, f"Wallet with address '{address}' already exists.")
+                        return await error(message.channel, f"Wallet with name '{name}' already exists.")
                     
-                    values_to_insert = {'address': args[1], 'private_key': args[2], 'discord_chanmsglogs_id': args[3]}
+                    values_to_insert = {'name': name, 'address': args[2], 'private_key': args[3], 'discord_chanmsglogs_id': args[4]}
                     client.db_smartswap.insert_into_table('wallets', values_to_insert)
+                    values_to_insert["private_key"] = "*hided*"
                     await send_embed(
                         message.channel,
                         "✅ Success",
-                        f"The address: {args[1]} with discord_chan_id: {args[3]} has been inserted into the database.",
+                        f": {values_to_insert} has been inserted into the database.",
                         discord.Color.green()
                     )
                 except Exception as e:
@@ -36,11 +37,11 @@ async def wallets(client, message, args):
                 if len(args) != 2:
                     await error(message.channel, usage)
                 try:
-                    query = client.db_smartswap.execute_query(f"SELECT wallets.address FROM wallets WHERE wallets.address = '{args[1]}';")
+                    query = client.db_smartswap.execute_query(f"SELECT wallets.name FROM wallets WHERE wallets.name = '{args[1]}';")
                     if query:
                         return await send_embed(
                             message.channel, 
-                            f"⚙️ Searched by: address",
+                            f"⚙️ Searched by: name",
                             f"{query}",
                             discord.Color.green()
                         )
@@ -53,27 +54,27 @@ async def wallets(client, message, args):
                 if len(args) != 2:
                     await error(message.channel, usage)
                 try:
-                    wallet_address = args[1]
+                    wallet_name = args[1]
 
                     # Check if the wallet address exists in the wallets table
-                    query = client.db_smartswap.execute_query(f"DELETE FROM client_wallets WHERE wallet_address = '{wallet_address}';")
+                    query = client.db_smartswap.execute_query(f"DELETE FROM client_wallets WHERE wallet_name = '{wallet_name }';")
                     await send_embed(
                         message.channel, 
-                        f"⚙️ Success removed all access to the wallet {wallet_address} for all clients",
+                        f"⚙️ Success removed all access to the wallet {wallet_name } for all clients",
                         f"",
                         discord.Color.pink()
                     )
                     
                     # Delete the wallet address from the wallets table
                     try:
-                        client.db_smartswap.delete_row_by_column_value('wallets', 'address', wallet_address)
+                        client.db_smartswap.delete_row_by_column_value('wallets', 'name', wallet_name)
                     except Exception as e:
-                        return await error(message.channel, f"Error while deleting '{wallet_address}' from the table: wallets. \n{e}")
+                        return await error(message.channel, f"Error while deleting '{wallet_name}' from the table: wallets. \n{e}")
 
                     return await send_embed(
                         message.channel, 
-                        f"Wallet {wallet_address} has been deleted from the whole database.",
-                        f"{wallet_address}",
+                        f"Wallet '{wallet_name}' has been deleted from the whole database.",
+                        f"",
                         discord.Color.green()
                     )
                 except Exception as e:
