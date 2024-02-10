@@ -68,7 +68,7 @@ async def git(client, message, args):
 
         return
 
-    if args[0] == "remove":
+    if args[0] == "add":
         if len(args) != 3:
             return await error(message.channel, "Invalid argument. Use `git add <project_name> <project_path>`")
 
@@ -80,10 +80,10 @@ async def git(client, message, args):
 
         config[project_name] = project_path
         write_json("update_config.json", config)
-        await send_embed(message.channel, "Project Added", f"Project '{project_name}' has been created.", discord.Color.green())
+        await send_embed(message.channel, "Project Added", f"Project '{project_name}' has been added.", discord.Color.green())
         return
     
-    if args[0] == "delete":
+    if args[0] == "remove":
         if len(args) != 2:
             return await error(message.channel, "Invalid argument. Use `git remove <project_name>`")
 
@@ -94,7 +94,7 @@ async def git(client, message, args):
 
         del config[project_name]
         write_json("update_config.json", config)
-        await send_embed(message.channel, "Project Removed", f"Project '{project_name}' has been deleted.", discord.Color.green())
+        await send_embed(message.channel, "Project Removed", f"Project '{project_name}' has been removed.", discord.Color.green())
         return
     
     await error(message.channel, usage)
