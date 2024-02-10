@@ -18,7 +18,7 @@ admin_commands = { # All bot commands
     'ping': ping,
     'clients': clients,
     'wallets': wallets,
-    'update': update
+    'git': git
 }
 
 async def help(client, message, args): # Command !help that print all commands
