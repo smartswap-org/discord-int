@@ -22,10 +22,12 @@ async def git(client, message, args):
     usage = """Invalid argument(s) number. Use:
     git projects
     git update <project_name>
+    git add <project_name> <project_path>
+    git remove <project_name>
     """
     config = get_json_content("update_config.json")
     if config == -1:
-        write_json("update_config.json", {"projectname":"c://dir"})
+        write_json("update_config.json", {})
         await error(message.channel, "update_config.json has been created.")
         return 
 
@@ -65,5 +67,34 @@ async def git(client, message, args):
             await error(message.channel, f"An unexpected error occurred: {e}")
 
         return
+
+    if args[0] == "remove":
+        if len(args) != 3:
+            return await error(message.channel, "Invalid argument. Use `git add <project_name> <project_path>`")
+
+        project_name = args[1]
+        project_path = args[2]
+
+        if project_name in config:
+            return await error(message.channel, f"Project '{project_name}' already exists.")
+
+        config[project_name] = project_path
+        write_json("update_config.json", config)
+        await send_embed(message.channel, "Project Added", f"Project '{project_name}' has been created.", discord.Color.green())
+        return
     
-    await error(message.channel, "Invalid argument. Use `git <project>` or `git update`")
+    if args[0] == "delete":
+        if len(args) != 2:
+            return await error(message.channel, "Invalid argument. Use `git remove <project_name>`")
+
+        project_name = args[1]
+
+        if project_name not in config:
+            return await error(message.channel, f"Project '{project_name}' does not exist.")
+
+        del config[project_name]
+        write_json("update_config.json", config)
+        await send_embed(message.channel, "Project Removed", f"Project '{project_name}' has been deleted.", discord.Color.green())
+        return
+    
+    await error(message.channel, usage)
