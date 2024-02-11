@@ -2,7 +2,7 @@ import discord
 import platform
 import psutil
 import socket
-from ...logs.error import *
+from ...d_logs.error import *
 
 async def host(client, message, args):
     try:

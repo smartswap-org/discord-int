@@ -1,4 +1,4 @@
-from ..logs import *
+from ..d_logs import *
 from .set_permissions import set_clients_permissions
 from ..embeds.embeds import *
 

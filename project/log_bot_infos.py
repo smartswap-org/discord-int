@@ -4,7 +4,7 @@ import subprocess
 import socket
 import psutil
 import platform
-from .logs import *
+from .d_logs import *
 from datetime import datetime
 import time
 

@@ -1,5 +1,5 @@
 import discord
-from ...logs.error import *
+from ...d_logs.error import *
 from discord import Activity, ActivityType
 import subprocess
 

@@ -1,5 +1,5 @@
 import discord
-from ...logs.error import *
+from ...d_logs.error import *
 
 async def clear(client, message, args):
     try:
