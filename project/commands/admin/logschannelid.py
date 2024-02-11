@@ -1,5 +1,5 @@
-from ...misc.config import *
-from ...misc.logs import *
+from ...config import *
+from ...logs.error import *
 import json 
 
 async def logschannelid(client, message, args):

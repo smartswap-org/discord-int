@@ -1,6 +1,6 @@
 import discord
-from ...misc.logs import *
-from ...misc.config import *
+from ...logs.error import *
+from ...config import *
 from DEXcryptoLib.Lib.Misc.json import *
 import subprocess
 

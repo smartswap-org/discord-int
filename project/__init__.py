@@ -8,7 +8,7 @@ from .commands.admin.clients import *
 from .commands.admin.wallets import *
 from .commands.admin.git import *
 
-from .misc.embeds import *
-from .misc.logs import *
+from .embeds.embeds import *
+from .logs.error import *
 
 from .wallets_rooms.room_management import *

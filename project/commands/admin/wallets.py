@@ -1,4 +1,4 @@
-from ...misc.logs import *
+from ...logs.error import *
 from DEXcryptoLib.Lib.Misc.database import *
 
 async def wallets(client, message, args):
