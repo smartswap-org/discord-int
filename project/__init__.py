@@ -14,4 +14,4 @@ from .logs.error import *
 from .wallets_rooms.room_management import *
 
 from .config import *
-from .log_bot_info import *
+from .log_bot_infos import *
