@@ -1,5 +1,5 @@
-from ...misc.config import *
-from ...misc.logs import *
+from ...config import *
+from ...logs.error import *
 import subprocess
 
 async def ping(client, message, args):

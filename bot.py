@@ -37,6 +37,7 @@ async def help(client, message, args): # Command !help that print all commands
 
 client_commands["help"] = help
 
+
 class MyClient(discord.Client): # Create the client object for the bot
     async def on_ready(self): # When the bot start
         print(f'Logged in as {self.user} (ID: {self.user.id})')
@@ -45,8 +46,7 @@ class MyClient(discord.Client): # Create the client object for the bot
         await self.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="➡️ " + bot_config["prefix"] +"help")) # Rich presence
         self.tmux_task.start() # // While
         self.check_wallets_rooms_task.start() # // While
-        await discord_log(client, "Bot", "🤖 Bot started")   
-       
+        await log_bot_infos(client)   
 
     @tasks.loop(seconds=5)
     async def tmux_task(self): # Execute tmux checkup every 5 seconds
@@ -67,7 +67,7 @@ class MyClient(discord.Client): # Create the client object for the bot
         args = content[1:]
         if command in admin_commands: # Verify that the command sent is in commands list
             if message.author.guild_permissions.administrator: # Admin permission security to use the bot
-                if message.channel.name == "smartswap": # To use the bot in log channel: str(message.channel.id) == bot_config["logschannelid"] 
+                if message.channel.name == "smartswap" or str(message.channel.id) == bot_config["logschannelid"] :
                     print("admin-Command: " + bot_config["prefix"] + command + " | Author: " + str(message.author) + "(" + str(message.author.id) + ") | Channel: " + str(message.channel.name))
                     await admin_commands[command](self, message, args) 
             else:

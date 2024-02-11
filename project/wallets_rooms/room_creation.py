@@ -1,6 +1,6 @@
-from ..misc.logs import discord_log
+from ..logs import *
 from .set_permissions import set_clients_permissions
-from ..misc.embeds import *
+from ..embeds.embeds import *
 
 async def create_missing_wallet_channels(client, category, wallets):
     for wallet in wallets:
