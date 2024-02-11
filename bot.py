@@ -67,7 +67,7 @@ class MyClient(discord.Client): # Create the client object for the bot
         args = content[1:]
         if command in admin_commands: # Verify that the command sent is in commands list
             if message.author.guild_permissions.administrator: # Admin permission security to use the bot
-                if message.channel.name == "smartswap": # To use the bot in log channel: str(message.channel.id) == bot_config["logschannelid"] 
+                if message.channel.name == "smartswap" or str(message.channel.id) == bot_config["logschannelid"] :
                     print("admin-Command: " + bot_config["prefix"] + command + " | Author: " + str(message.author) + "(" + str(message.author.id) + ") | Channel: " + str(message.channel.name))
                     await admin_commands[command](self, message, args) 
             else:
