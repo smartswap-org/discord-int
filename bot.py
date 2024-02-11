@@ -46,7 +46,7 @@ class MyClient(discord.Client): # Create the client object for the bot
         await self.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="➡️ " + bot_config["prefix"] +"help")) # Rich presence
         self.tmux_task.start() # // While
         self.check_wallets_rooms_task.start() # // While
-        await log_bot_info(client)   
+        await log_bot_infos(client)   
 
     @tasks.loop(seconds=5)
     async def tmux_task(self): # Execute tmux checkup every 5 seconds
