@@ -1,5 +1,6 @@
 import discord
-from ...d_logs.error import *
+from ...d_logs import *
+from project.config import get_git_config
 from discord import Activity, ActivityType
 import subprocess
 
@@ -25,11 +26,7 @@ async def git(client, message, args):
     git add <project_name> <project_path>
     git remove <project_name>
     """
-    config = get_json_content("update_config.json")
-    if config == -1:
-        write_json("update_config.json", {})
-        await error(message.channel, "update_config.json has been created.")
-        return 
+    config = get_git_config()
 
     if len(args) < 1:
         return await error(message.channel, usage)
@@ -79,7 +76,7 @@ async def git(client, message, args):
             return await error(message.channel, f"Project '{project_name}' already exists.")
 
         config[project_name] = project_path
-        write_json("update_config.json", config)
+        write_json("configs/git_config.json", config)
         await send_embed(message.channel, "Project Added", f"Project '{project_name}' has been added.", discord.Color.green())
         return
     
@@ -93,7 +90,7 @@ async def git(client, message, args):
             return await error(message.channel, f"Project '{project_name}' does not exist.")
 
         del config[project_name]
-        write_json("update_config.json", config)
+        write_json("configs/git_config.json", config)
         await send_embed(message.channel, "Project Removed", f"Project '{project_name}' has been removed.", discord.Color.green())
         return
     
