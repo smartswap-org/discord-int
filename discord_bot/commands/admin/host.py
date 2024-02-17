@@ -3,7 +3,7 @@ import platform
 import psutil
 import socket
 import os 
-from discord_bot.d_logs.error import error 
+from discord_bot.d_logs import error 
 from discord_bot.embeds.embeds import send_embed
 
 async def host(client, message, args):

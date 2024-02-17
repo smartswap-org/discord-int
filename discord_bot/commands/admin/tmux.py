@@ -1,6 +1,7 @@
 import discord
-from ...d_logs.error import *
-from ...config import *
+from discord_bot.d_logs import error, discord_log
+from discord_bot.embeds.embeds import send_embed
+from discord_bot.config import get_tmux_config
 from DEXcryptoLib.Lib.Misc.json import *
 import subprocess
 
