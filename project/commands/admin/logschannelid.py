@@ -1,5 +1,5 @@
 from ...config import *
-from ...d_logs.error import *
+from ...d_logs import *
 import json 
 
 async def logschannelid(client, message, args):
@@ -17,4 +17,4 @@ async def logschannelid(client, message, args):
         "📜Logs Channel ID",
         "Value has been edited: " + str(bot_config["logschannelid"]) ,
         discord.Color.green())
-    return await discord_log(client, "📜Logs Channel ID", "Channel ID for logs edited by: " + message.author, discord.Color.green()) 
+    return await discord_log(client, "📜Logs Channel ID", "Channel ID for logs edited by: " + message.author) 
