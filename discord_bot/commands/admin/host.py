@@ -2,7 +2,9 @@ import discord
 import platform
 import psutil
 import socket
-from ...d_logs.error import *
+import os 
+from discord_bot.d_logs.error import error 
+from discord_bot.embeds.embeds import send_embed
 
 async def host(client, message, args):
     try:

@@ -1,5 +1,7 @@
 import discord
-from ...d_logs.error import *
+
+from discord_bot.d_logs.error import error 
+from discord_bot.embeds.embeds import send_embed
 
 async def clear(client, message, args):
     try:
