@@ -1,4 +1,4 @@
-from ..d_logs import *
+from ..discordlogs import *
 
 
 async def set_clients_permissions(client, channel, discord_user_ids):

@@ -1,6 +1,6 @@
 import discord
 import subprocess
-from discord_bot.d_logs import error 
+from discord_bot.discordlogs import error 
 from discord_bot.embeds.embeds import send_embed
 from discord import Activity, ActivityType
 

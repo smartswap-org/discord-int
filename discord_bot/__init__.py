@@ -9,7 +9,7 @@ from .commands.admin.wallets import *
 from .commands.admin.git import *
 
 from .embeds.embeds import *
-from .d_logs.error import *
+from .discordlogs.error import *
 
 from .wallets_rooms.room_management import *
 

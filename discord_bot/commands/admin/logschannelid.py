@@ -1,9 +1,9 @@
 import discord 
 import json 
-from discord_bot.d_logs import error 
+from discord_bot.discordlogs import error 
 from discord_bot.embeds.embeds import send_embed
 from discord_bot.config import get_bot_config
-from discord_bot.d_logs.discord_log import discord_log
+from discord_bot.discordlogs.discord_log import discord_log
 
 async def logschannelid(client, message, args):
     if len(args) != 1: # The channel ID is missing

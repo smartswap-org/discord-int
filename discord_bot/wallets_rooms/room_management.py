@@ -1,5 +1,5 @@
 from .room_creation import create_missing_wallet_channels, delete_unused_wallet_channels
-from ..d_logs import *
+from ..discordlogs import *
 from ..embeds.embeds import *
 
 async def check_wallets_rooms(client, category_id):

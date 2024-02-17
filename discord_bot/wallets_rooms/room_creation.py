@@ -1,4 +1,4 @@
-from ..d_logs import *
+from ..discordlogs import *
 from .set_permissions import set_clients_permissions
 from ..embeds.embeds import *
 

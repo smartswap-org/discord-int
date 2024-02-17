@@ -1,5 +1,5 @@
-from ..embeds.embeds import *
-from ..config import *
+import discord 
+from discord_bot.embeds.embeds import send_embed
 
 async def error(message, error):
     if not message: return 
