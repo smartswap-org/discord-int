@@ -1,8 +1,8 @@
 import discord
+import subprocess
 from discord_bot.d_logs import error 
 from discord_bot.embeds.embeds import send_embed
 from discord import Activity, ActivityType
-import subprocess
 
 async def restart(client, message, args):
     if len(args) == 1:
