@@ -1,7 +1,7 @@
 import discord
 from discord import Activity, ActivityType
 from discord.ext import tasks
-from project import * # Project includes
+from discord_bot import * # Project includes
 
 bot_config = get_bot_config()
 

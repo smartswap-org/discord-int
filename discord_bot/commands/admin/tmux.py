@@ -1,8 +1,9 @@
 import discord
-from ...d_logs.error import *
-from ...config import *
-from DEXcryptoLib.Lib.Misc.json import *
 import subprocess
+from discord_bot.discordlogs import error, discord_log
+from discord_bot.embeds.embeds import send_embed
+from discord_bot.config import get_tmux_config
+from DEXcryptoLib.Lib.Misc.json import *
 
 async def tmux(client, message, args):
     usage = """Invalid argument(s) number. Use:

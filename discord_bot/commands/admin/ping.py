@@ -1,6 +1,8 @@
-from ...config import *
-from ...d_logs.error import *
+import discord 
 import subprocess
+from discord_bot.discordlogs import error 
+from discord_bot.embeds.embeds import send_embed
+from discord_bot.config import get_bot_config
 
 async def ping(client, message, args):
     if len(args) != 0:

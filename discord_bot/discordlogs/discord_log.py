@@ -1,5 +1,6 @@
-from ..embeds.embeds import *
-from ..config import *
+import discord 
+from discord_bot.config import get_bot_config
+from discord_bot.embeds.embeds import send_embed
 
 async def discord_log(client, title, log):
     bot_config = get_bot_config()

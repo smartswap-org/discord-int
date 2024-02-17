@@ -1,4 +1,6 @@
-from ...d_logs.error import *
+import discord 
+from discord_bot.discordlogs import error 
+from discord_bot.embeds.embeds import send_embed
 from DEXcryptoLib.Lib.Misc.database import *
 
 async def wallets(client, message, args):

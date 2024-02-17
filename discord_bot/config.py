@@ -1,4 +1,4 @@
-from DEXcryptoLib.Lib import *
+from DEXcryptoLib.Lib.Misc.json import get_json_content, write_json
 
 def get_config(file_path, default_config):
     config = get_json_content(file_path)
