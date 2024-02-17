@@ -3,6 +3,5 @@ logs/
 tmux_config.json
 bot_config.json
 db_config.json
-update_config.json
-.DS_Store
+git_config.json
 .DS_Store
