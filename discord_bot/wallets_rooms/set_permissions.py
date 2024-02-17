@@ -1,5 +1,6 @@
-from ..discordlogs import *
-
+import discord 
+from discord_bot.discordlogs.discord_log import discord_log
+from DEXcryptoLib.Lib.Misc.logs import log
 
 async def set_clients_permissions(client, channel, discord_user_ids):
     try:
