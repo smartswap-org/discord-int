@@ -40,7 +40,7 @@ client_commands["help"] = help
 
 class MyClient(discord.Client): # Create the client object for the bot
     async def on_ready(self): # When the bot start
-        subprocess.run(["bash", "scripts/configs.sh"]) # Create config scripts if they dont exists
+        subprocess.run(["bash", "scripts/create_config_files.sh"]) # Create config scripts if they dont exists
         print(f'Logged in as {self.user} (ID: {self.user.id})')
         self.db_smartswap = init_database("smartswap", "configs/db_config.json")
         self.db_smartswap.connect()
