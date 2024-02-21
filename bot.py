@@ -9,6 +9,12 @@ client_commands = {
 
 }
 
+#dependicies:
+#web3
+#discord
+#pmysql-connector-python
+#psutil
+
 admin_commands = { # All bot commands
     'clear': clear,
     'host': host,
