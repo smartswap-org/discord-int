@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # MySQL credentials
 MYSQL_USER="root"
 MYSQL_PASS="your_password"
@@ -9,7 +7,7 @@ MYSQL_PORT="3306"
 # Database names
 DB_NAMES=("smartswap" "smartswap_positions" "smartswap_data")
 
-# Tables creation queries
+# Tables creation
 WALLETS_TABLE_QUERY="
 CREATE TABLE IF NOT EXISTS wallets (
     name VARCHAR(255) PRIMARY KEY,

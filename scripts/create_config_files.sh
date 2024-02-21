@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # create_config_files dir
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
