@@ -9,27 +9,54 @@ from discord_bot.config import get_bot_config
 from discord_bot.discordlogs import discord_log, error
 
 def escape_special_chars(string):
-    # Escape underscores, asterisks, and double underscores
+    """
+    Escapes special characters in a string by prefixing them with a backslash.
+
+    # From somewhere on the web
+
+    Exemple:
+    string:          This_is_an_example_with*special_chars_and__double_underscores
+    returned string: This\_is\_an\_example\_with\*special\_chars\_and\_\_double\_underscores
+    """
+
     string = re.sub(r'([\\*_])', r'\\\1', string)
     return string
 
 async def log_bot_infos(client):
     try:
-        bot_config = get_bot_config()
-        guild = client.get_guild(int(bot_config["discordid"]))
-        if "logschannelid" not in bot_config:
-            return
-        channel = guild.get_channel(int(bot_config["logschannelid"]))
+        bot_config = get_bot_config()                          # Get bot config
+        guild = client.get_guild(int(bot_config["discordid"])) # Get object of the current Discord configured
+        if "logschannelid" not in bot_config: return           # Dont sent a message in the log channel if not configured
+            
+        channel = guild.get_channel(
+            int(bot_config["logschannelid"])
+            )
 
-        external_ip = get_external_ip()
-        local_ip = socket.gethostbyname(socket.gethostname())
+        external_ip = get_external_ip() # Get my public ip address 
 
-        git_branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).decode().strip()
-        git_branch = escape_special_chars(git_branch)
-        last_commits = subprocess.check_output(['git', 'log', '-10', '--pretty=format:%H %an %s']).decode().strip().split('\n')
+        # Get my local ip address: 192.168.1.X
+        local_ip = socket.gethostbyname(
+            socket.gethostname()
+            ) 
 
-        repository_url = subprocess.check_output(['git', 'config', '--get', 'remote.origin.url']).decode().strip().replace('.git', '')
+        # Get the current branch that we work on 
+        git_branch = subprocess.check_output(
+            ['git', 'rev-parse', '--abbrev-ref', 'HEAD']
+            ).decode().strip() 
+        git_branch = escape_special_chars(git_branch) 
+        
+        # Get the 10 last commits of made on the branch
+        # and split them line by line using \n
+        last_commits = subprocess.check_output(
+            ['git', 'log', '-10', '--pretty=format:%H %an %s']
+            ).decode().strip().split('\n') 
 
+        # Get repository url
+        repository_url = subprocess.check_output(
+            ['git', 'config', '--get', 'remote.origin.url']
+            ).decode().strip().replace('.git', '') 
+
+        # Uptime of the machine
         uptime = datetime.datetime.now() - datetime.datetime.fromtimestamp(psutil.boot_time())
 
         embed_description = (
