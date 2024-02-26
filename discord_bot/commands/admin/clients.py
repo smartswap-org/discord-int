@@ -4,6 +4,10 @@ from discord_bot.embeds.embeds import send_embed
 from DEXcryptoLib.Lib.Misc.database import *
 
 async def clients(client, message, args):
+    """
+    Discord command to manage clients on the database and manage their access to wallets.
+    """
+
     usage = """Invalid argument(s) number. Use:
     clients create <user> <discord_user_id>
     clients delete <user/discord_user_id>
