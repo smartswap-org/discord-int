@@ -5,11 +5,17 @@ from discord_bot.embeds.embeds import send_embed
 from discord_bot.config import get_bot_config
 
 async def ping(client, message, args):
-    if len(args) != 0:
-        return await error(
-            message.channel,
-            "Invalid argument(s). Use:\n"
-            "ping")
+    """
+    Discord command to get the ping of the host with google (see latence)
+    """
+
+    # This part of the code is now in comment because whatever the arguments of the command, 
+    # they are useless so we can execute the command
+    #if len(args) != 0:
+        #return await error(
+            #message.channel,
+            #"Invalid argument(s). Use:\n"
+            #"ping")
     
     try:
         result = subprocess.run(['ping', '-c', '4', 'google.com'], capture_output=True, text=True, timeout=10)
