@@ -5,6 +5,11 @@ from discord_bot.embeds.embeds import send_embed
 from discord import Activity, ActivityType
 
 async def restart(client, message, args):
+    """
+    Discord command to restart the host or the bot.
+    NB: - the bot restart only work if u use start_bot.sh to start the bot (because it use a while)
+        - the host restart command may not working depending ur OS  
+    """
     if len(args) == 1:
         if args[0] == "host":
             await client.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="⚠️ Host is restarting"))

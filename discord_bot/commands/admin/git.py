@@ -5,7 +5,6 @@ from discord_bot.discordlogs import error
 from discord_bot.embeds.embeds import send_embed
 from discord_bot.config import get_git_config
 
-
 async def process_submodule_result(message_channel, submodule_result):
     command_status_embed = discord.Embed(title="subprocess command ✅" if submodule_result.returncode == 0 else "subprocess command ❌", 
                                          color=discord.Color.green() if submodule_result.returncode == 0 else discord.Color.red())
@@ -22,6 +21,11 @@ async def process_submodule_result(message_channel, submodule_result):
 
 
 async def git(client, message, args):
+    """
+    git command to manage differents git projects configured in configs/git_config.json
+    to be able to pull update directly on the discord
+    """
+    
     usage = """Invalid argument(s) number. Use:
     git projects
     git update <project_name>

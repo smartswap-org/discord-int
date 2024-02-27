@@ -7,51 +7,45 @@ from discord_bot.discordlogs import error
 from discord_bot.embeds.embeds import send_embed
 
 async def host(client, message, args):
+    """
+    Discord command to informations about the host (the machine where is the bot)
+    """
     try:
-        # Informations système
-        system_info = platform.system()
-        node_name = platform.node()
-        release_info = platform.release()
-        version_info = platform.version()
-        machine_info = platform.machine()
-        processor_info = platform.processor()
-
-        # Informations CPU
-        cpu_info = f"**Processor:** {processor_info}\n"
+        # cpu infos
+        cpu_info = f"**Processor:** {platform.processor()}\n"
         cpu_info += f"**Physical Cores:** {psutil.cpu_count(logical=False)}\n"
         cpu_info += f"**Total Cores:** {psutil.cpu_count(logical=True)}"
 
-        # Informations mémoire
-        memory_info = psutil.virtual_memory()
-
-        # Informations disque
+        # disk infos
         disk_info = psutil.disk_usage('/')
         disk_usage_info = f"**Disk Usage:** {disk_info.percent}% used\n"
         disk_usage_info += f"**Total Disk Space:** {round(disk_info.total / (1024 ** 3), 2)} GB\n"
         disk_usage_info += f"**Used Disk Space:** {round(disk_info.used / (1024 ** 3), 2)} GB\n"
         disk_usage_info += f"**Free Disk Space:** {round(disk_info.free / (1024 ** 3), 2)} GB"
 
-        # Informations sur la connexion Internet
+        # internet infos
         try:
             host_name = socket.gethostname()
-            host_ip = socket.gethostbyname(host_name)
             internet_info = f"**Host Name:** {host_name}\n"
-            internet_info += f"**IP Address:** {host_ip}"
+            internet_info += f"**IP Address:** {
+                socket.gethostbyname(host_name)
+            }"
+
         except socket.error:
             internet_info = "Unable to retrieve Internet information."
 
-        # Répertoire de travail du bot
+        # working directory of the bot (bot path)
         current_working_directory = f"**Current Working Directory:** {os.getcwd()}"
 
         # Description de l'embed
         embed_description = (
-            f"**System:** {system_info}\n"
-            f"**Node Name:** {node_name}\n"
-            f"**Release:** {release_info}\n"
-            f"**Version:** {version_info}\n"
-            f"**Machine:** {machine_info}\n"
+            f"**System:** {platform.system()}\n"
+            f"**Node Name:** {platform.node()}\n"
+            f"**Release:** {platform.release()}\n"
+            f"**Version:** {platform.version()}\n"
+            f"**Machine:** {platform.machine()}\n"
             f"{cpu_info}\n"
-            f"**Memory Usage:** {memory_info.percent}% used\n"
+            f"**Memory Usage:** {psutil.virtual_memory().percent}% used\n"
             f"{disk_usage_info}\n"
             f"{internet_info}\n"
             f"{current_working_directory}"
