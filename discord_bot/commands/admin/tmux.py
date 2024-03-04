@@ -58,6 +58,7 @@ async def tmux(client, message, args):
                 tmuxoutput = tmuxlist.stdout
                 for key in tmux_config.keys():
                     if not key in tmuxoutput:
+                        print(key, tmuxoutput)
                         argline = tmux_config[key].split(" ", 1)
                         command_os = ['sudo', 'tmux', 'new-session', '-d', '-s', key] + argline 
                         print("tmux", command_os)
