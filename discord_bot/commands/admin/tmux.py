@@ -59,7 +59,7 @@ async def tmux(client, message, args):
                 for key in tmux_config.keys():
                     if not key in tmuxoutput:
                         argline = tmux_config[key].split(" ", 1)
-                        command_os = ['sudo', 'tmux', 'new-session', '-d', '-s', key] + '"' + argline + '"'
+                        command_os = ['sudo', 'tmux', 'new-session', '-d', '-s', key] + argline 
                         print("tmux", command_os)
                         subprocess.run(command_os) 
                         await discord_log(client, 
