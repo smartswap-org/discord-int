@@ -69,7 +69,7 @@ async def tmux(client, message, args):
                 if len(args) < 3: return await error(message.channel, usage)
                 if not tmux_config: tmux_config = {}
                 tmux_config[args[1]] = ' '.join(args[2:])
-                write_json("tmux_config.json", tmux_config)
+                write_json("configs/tmux_config.json", tmux_config)
                 await send_embed(
                     message.channel, 
                     "🖥️ tmux (new)",
@@ -80,7 +80,7 @@ async def tmux(client, message, args):
                 if len(args) != 2: return await error(message.channel, usage) 
                 if args[1] in tmux_config.keys():
                     del tmux_config[args[1]]
-                    write_json("tmux_config.json", tmux_config)
+                    write_json("configs/tmux_config.json", tmux_config)
                     await send_embed(
                         message.channel,
                         "🖥️ tmux (remove)",
