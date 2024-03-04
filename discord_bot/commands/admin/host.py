@@ -27,9 +27,7 @@ async def host(client, message, args):
         try:
             host_name = socket.gethostname()
             internet_info = f"**Host Name:** {host_name}\n"
-            internet_info += f"**IP Address:** {
-                socket.gethostbyname(host_name)
-            }"
+            internet_info += f"**IP Address:** {socket.gethostbyname(host_name)}"
 
         except socket.error:
             internet_info = "Unable to retrieve Internet information."
