@@ -62,7 +62,7 @@ async def tmux(client, message, args):
                         command_os = ['sudo', 'tmux', 'new-session', '-d', '-s', key] + argline
                         subprocess.run(command_os) 
                         await discord_log(client, 
-                                          ("🖥️ tmux (start)", "tmux:" + str(key) + "\ncommand_os:\n" + str(command_os)), 
+                                          ("🖥️ tmux (start)", "tmux:" + str(key)), 
                                           discord.Color.green())     
             case "new":
                 if len(args) < 3: return await error(message.channel, usage)
