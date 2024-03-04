@@ -20,10 +20,14 @@ def create_embed(title, description, color):
 
 async def send_embed(channel, title, description, color):
     """
-    This function create using the function create_embed
-    then get the timer since when the bot is started using the global variable bot_start_time
-    and set this Botuptime in footer.
+    This function creates an embed using the function create_embed
+    then gets the timer since when the bot is started using the global variable bot_start_time
+    and sets this Bot uptime in the footer.
     """
+    # Truncate title if it's too long
+    if len(title) > 256:
+        title = title[:253] + "..."  # Keep it within 256 characters including "..."
+    
     # Create embed
     embed = create_embed(title, description, color)
 
@@ -37,6 +41,7 @@ async def send_embed(channel, title, description, color):
 
     # Send embed
     await channel.send(embed=embed)
+
 
 def format_time(seconds):
     """
