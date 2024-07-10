@@ -95,9 +95,9 @@ class MyClient(discord.Client):
 
         if command in admin_commands: # Verify that the command sent is in commands list
             if message.author.guild_permissions.administrator: # Admin permission security to use the bot
-                if message.channel.name == "smartswap" or str(message.channel.id) == bot_config["logschannelid"] : # channel must be smartswap or the log channel
-                    print("admin-Command: " + bot_config["prefix"] + command + " | Author: " + str(message.author) + "(" + str(message.author.id) + ") | Channel: " + str(message.channel.name))
-                    await admin_commands[command](self, message, args) 
+                #if message.channel.name == "smartswap" or str(message.channel.id) == bot_config["logschannelid"] : # channel must be smartswap or the log channel
+                print("admin-Command: " + bot_config["prefix"] + command + " | Author: " + str(message.author) + "(" + str(message.author.id) + ") | Channel: " + str(message.channel.name))
+                await admin_commands[command](self, message, args) 
             else:
                     return await error(message.channel, "You dont have the permission to use this command (Admin permission).") 
         elif command in client_commands:
