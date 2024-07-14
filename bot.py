@@ -13,7 +13,7 @@ from src.commands.admin.wallets import wallets
 from src.commands.admin.git import git
 from src.embeds.embeds import send_embed
 from src.discordlogs.error import error
-from src.database.temp import init_database
+from src.database.db import init_database
 from src.log_bot_infos import log_bot_infos
 import subprocess
 
