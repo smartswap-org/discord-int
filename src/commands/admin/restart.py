@@ -1,7 +1,7 @@
 import discord
 import subprocess
-from discord_bot.discordlogs import error 
-from discord_bot.embeds.embeds import send_embed
+from src.discordlogs import error 
+from src.embeds.embeds import send_embed
 from discord import Activity, ActivityType
 
 async def restart(client, message, args):

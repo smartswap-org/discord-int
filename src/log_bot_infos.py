@@ -5,8 +5,8 @@ import socket
 import psutil
 import platform
 import re
-from discord_bot.config import get_bot_config
-from discord_bot.discordlogs import discord_log, error
+from src.config import get_bot_config
+from src.discordlogs import discord_log, error
 
 def escape_special_chars(string):
     """

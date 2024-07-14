@@ -3,8 +3,8 @@ import platform
 import psutil
 import socket
 import os 
-from discord_bot.discordlogs import error 
-from discord_bot.embeds.embeds import send_embed
+from src.discordlogs import error 
+from src.embeds.embeds import send_embed
 
 async def host(client, message, args):
     """

@@ -1,8 +1,8 @@
 import discord
 import subprocess
-from discord_bot.discordlogs import error, discord_log
-from discord_bot.embeds.embeds import send_embed
-from discord_bot.config import get_tmux_config
+from src.discordlogs import error, discord_log
+from src.embeds.embeds import send_embed
+from src.config import get_tmux_config
 from DEXcryptoLib.Lib.Misc.json import *
 
 async def tmux(client, message, args):

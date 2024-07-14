@@ -1,6 +1,6 @@
 import discord 
-from discord_bot.discordlogs.discord_log import discord_log
-from discord_bot.embeds.embeds import send_embed
+from src.discordlogs.discord_log import discord_log
+from src.embeds.embeds import send_embed
 from .set_permissions import set_clients_permissions
 
 # In this code, we use 

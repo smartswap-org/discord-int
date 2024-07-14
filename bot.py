@@ -1,7 +1,7 @@
 import discord
 from discord import Activity, ActivityType
 from discord.ext import tasks
-from discord_bot import * # Project includes
+from src import * # Project includes
 
 #To make: a script to install all the dependicies with pip
     #dependicies:

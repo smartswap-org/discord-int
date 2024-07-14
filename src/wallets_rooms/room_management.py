@@ -1,5 +1,5 @@
 import discord 
-from discord_bot.discordlogs.discord_log import discord_log
+from src.discordlogs.discord_log import discord_log
 from .room_creation import create_missing_wallet_channels, delete_unused_wallet_channels
 
 async def check_wallets_rooms(client, category_id):

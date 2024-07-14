@@ -1,6 +1,6 @@
 import discord 
-from discord_bot.config import get_bot_config
-from discord_bot.embeds.embeds import send_embed
+from src.config import get_bot_config
+from src.embeds.embeds import send_embed
 
 async def discord_log(client, title, log):
     """

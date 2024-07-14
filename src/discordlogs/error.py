@@ -1,5 +1,5 @@
 import discord 
-from discord_bot.embeds.embeds import send_embed
+from src.embeds.embeds import send_embed
 from .discord_log import discord_log
 
 async def error(message, error):
