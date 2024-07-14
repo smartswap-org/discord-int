@@ -1,7 +1,6 @@
 import discord 
 from src.discordlogs import error 
 from src.embeds.embeds import send_embed
-from DEXcryptoLib.Lib.Misc.database import *
 
 async def clients(client, message, args):
     """

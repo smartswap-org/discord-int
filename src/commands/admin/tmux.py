@@ -3,7 +3,7 @@ import subprocess
 from src.discordlogs import error, discord_log
 from src.embeds.embeds import send_embed
 from src.config import get_tmux_config
-from DEXcryptoLib.Lib.Misc.json import *
+from src.json.write import write_json
 
 async def tmux(client, message, args):
     usage = """Invalid argument(s) number. Use:

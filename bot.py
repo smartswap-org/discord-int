@@ -54,8 +54,8 @@ class MyClient(discord.Client):
         self.db_smartswap = init_database("smartswap", "configs/db_config.json") # Get config of the database smartswap from configs/db_config.json
         self.db_smartswap.connect() # Connected to the database smartswap
         await self.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="➡️ " + bot_config["prefix"] +"help")) # Rich presence
-        self.tmux_task.start()                # A loop cheeckup of tmux_task fonction
-        self.check_wallets_rooms_task.start() # A loop cheeckup of check_wallets_rooms_task fonction
+        #self.tmux_task.start()                # A loop cheeckup of tmux_task fonction
+        #self.check_wallets_rooms_task.start() # A loop cheeckup of check_wallets_rooms_task fonction
         await log_bot_infos(client)   
 
     @tasks.loop(seconds=5)

@@ -1,7 +1,6 @@
 import discord 
 from src.discordlogs import error 
 from src.embeds.embeds import send_embed
-from DEXcryptoLib.Lib.Misc.database import *
 
 async def wallets(client, message, args):
     usage = """Invalid argument(s) number. Use:

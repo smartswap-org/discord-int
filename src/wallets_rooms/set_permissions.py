@@ -1,6 +1,6 @@
 import discord 
 from src.discordlogs.discord_log import discord_log
-from DEXcryptoLib.Lib.Misc.logs import log
+from loguru import logger
 
 async def set_clients_permissions(client, channel, discord_user_ids):
     """
@@ -28,5 +28,5 @@ async def set_clients_permissions(client, channel, discord_user_ids):
                 print(f"Error adding read permission: {e}")
 
     except Exception as e:
-        log("db", f"Error during query execution: {e}")
+        logger.error(f"Error during query execution: {e}")
         return False

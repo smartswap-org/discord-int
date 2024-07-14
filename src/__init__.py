@@ -15,3 +15,5 @@ from .wallets_rooms.room_management import *
 
 from .config import *
 from .log_bot_infos import *
+
+from .database.temp import *
