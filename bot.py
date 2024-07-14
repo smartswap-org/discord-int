@@ -1,14 +1,22 @@
 import discord
 from discord import Activity, ActivityType
 from discord.ext import tasks
-from src import * # Project includes
-
-#To make: a script to install all the dependicies with pip
-    #dependicies:
-    #web3
-    #discord
-    #pmysql-connector-python
-    #psutil
+from src.config import get_bot_config
+from src.commands.admin.clear import clear
+from src.commands.admin.host import host
+from src.commands.admin.logschannelid import logschannelid
+from src.commands.admin.restart import restart
+from src.commands.admin.tmux import tmux
+from src.commands.admin.ping import ping
+from src.commands.admin.clients import clients
+from src.commands.admin.wallets import wallets
+from src.commands.admin.git import git
+from src.embeds.embeds import send_embed
+from src.discordlogs.error import error
+from src.database.temp import init_database
+from src.log_bot_infos import log_bot_infos
+from src.wallets_rooms.room_management import check_wallets_rooms
+import subprocess
 
 bot_config = get_bot_config() # Get the config configs/bot_config.json
 
@@ -28,7 +36,7 @@ admin_commands = { # Admin commands: discord_bot/commands/admin/*
     'git': git
 }
 
-async def help(client, message, args): # Command !help that print all commands
+async def help(client, message, args): # command !help that print all commands
     """
     Function to send a message in embed 
     with the list of bot commands by printing them 1 per line.

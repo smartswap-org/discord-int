@@ -84,7 +84,7 @@ async def log_bot_infos(client):
         await discord_log(client, "🤖 Bot started", embed_description)
 
     except Exception as e:
-        await error(channel, f"Error starting bot with information.\n {e}")
+        print(f"Error starting bot with information.\n {e}")
 
 def get_external_ip():
     try:
