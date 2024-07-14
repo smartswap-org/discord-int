@@ -15,7 +15,6 @@ from src.embeds.embeds import send_embed
 from src.discordlogs.error import error
 from src.database.temp import init_database
 from src.log_bot_infos import log_bot_infos
-from src.wallets_rooms.room_management import check_wallets_rooms
 import subprocess
 
 bot_config = get_bot_config() # Get the config configs/bot_config.json
@@ -63,7 +62,6 @@ class MyClient(discord.Client):
         self.db_smartswap.connect() # Connected to the database smartswap
         await self.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="➡️ " + bot_config["prefix"] +"help")) # Rich presence
         #self.tmux_task.start()                # A loop cheeckup of tmux_task fonction
-        #self.check_wallets_rooms_task.start() # A loop cheeckup of check_wallets_rooms_task fonction
         await log_bot_infos(client)   
 
     @tasks.loop(seconds=5)
@@ -74,15 +72,6 @@ class MyClient(discord.Client):
         start it if needed.
         """
         await tmux(self, None, ['checkup'])
-
-    @tasks.loop(seconds=5)
-    async def check_wallets_rooms_task(self): 
-        """
-        Checks that the rooms in the roomscategid category configured in configs/bot_config exist for each wallet 
-        in the table wallets in database smartswap and assigns permissions to each user with clients_wallets 
-        and for each client from the clients table (userdiscordid).
-        """
-        await check_wallets_rooms(self, int(bot_config["roomscategid"]))
 
     async def on_message(self, message): 
         """
