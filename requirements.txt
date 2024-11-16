@@ -1,4 +1,3 @@
 discord
 loguru
-pmysql-connector-python
 psutil
