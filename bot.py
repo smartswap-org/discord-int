@@ -1,14 +1,21 @@
 import discord
 from discord import Activity, ActivityType
 from discord.ext import tasks
-from discord_bot import * # Project includes
-
-#To make: a script to install all the dependicies with pip
-    #dependicies:
-    #web3
-    #discord
-    #pmysql-connector-python
-    #psutil
+from src.config import get_bot_config
+from src.commands.admin.clear import clear
+from src.commands.admin.host import host
+from src.commands.admin.logschannelid import logschannelid
+from src.commands.admin.restart import restart
+from src.commands.admin.tmux import tmux
+from src.commands.admin.ping import ping
+from src.commands.admin.clients import clients
+from src.commands.admin.wallets import wallets
+from src.commands.admin.git import git
+from src.embeds.embeds import send_embed
+from src.discordlogs.error import error
+from src.database.db import init_database
+from src.log_bot_infos import log_bot_infos
+import subprocess
 
 bot_config = get_bot_config() # Get the config configs/bot_config.json
 
@@ -28,7 +35,7 @@ admin_commands = { # Admin commands: discord_bot/commands/admin/*
     'git': git
 }
 
-async def help(client, message, args): # Command !help that print all commands
+async def help(client, message, args): # command !help that print all commands
     """
     Function to send a message in embed 
     with the list of bot commands by printing them 1 per line.
@@ -54,8 +61,7 @@ class MyClient(discord.Client):
         self.db_smartswap = init_database("smartswap", "configs/db_config.json") # Get config of the database smartswap from configs/db_config.json
         self.db_smartswap.connect() # Connected to the database smartswap
         await self.change_presence(activity=Activity(type=ActivityType.custom, name=" ", details=" ", state="➡️ " + bot_config["prefix"] +"help")) # Rich presence
-        self.tmux_task.start()                # A loop cheeckup of tmux_task fonction
-        self.check_wallets_rooms_task.start() # A loop cheeckup of check_wallets_rooms_task fonction
+        #self.tmux_task.start()                # A loop cheeckup of tmux_task fonction
         await log_bot_infos(client)   
 
     @tasks.loop(seconds=5)
@@ -66,15 +72,6 @@ class MyClient(discord.Client):
         start it if needed.
         """
         await tmux(self, None, ['checkup'])
-
-    @tasks.loop(seconds=5)
-    async def check_wallets_rooms_task(self): 
-        """
-        Checks that the rooms in the roomscategid category configured in configs/bot_config exist for each wallet 
-        in the table wallets in database smartswap and assigns permissions to each user with clients_wallets 
-        and for each client from the clients table (userdiscordid).
-        """
-        await check_wallets_rooms(self, int(bot_config["roomscategid"]))
 
     async def on_message(self, message): 
         """
